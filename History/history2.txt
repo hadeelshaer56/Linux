@@ -1,0 +1,19 @@
+    1  mkdir -p Code Outputs History
+    2  cat > Code/convertor.py << 'EOF'
+celsius = int(input("Enter the Temperature in Celsius :\n"))
+fahrenheit = (1.8 * celsius) + 32
+print("Temperature in Fahrenheit :", fahrenheit)
+EOF
+
+    3  cat > Dockerfile << 'EOF'
+FROM python:3.11-slim
+WORKDIR /app
+COPY Code/convertor.py /app/convertor.py
+CMD ["python", "/app/convertor.py"]
+EOF
+
+    4  docker build -t c2f-convertor .
+    5  docker run -it --name conv1 c2f-convertor
+    6  docker run -it --name conv2 c2f-convertor
+    7  docker ps -a > Outputs/txt.containers
+    8  history > History/history2.txt
